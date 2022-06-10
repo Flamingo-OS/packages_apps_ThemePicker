@@ -62,6 +62,27 @@ genrule {
         + "$(location soong_zip) -o $(out) -C $$RES_DIR -D $$RES_DIR"
 }
 
+android_library {
+    name: "ThemePicker_core",
+
+    static_libs: [
+        "monet",
+        "wallpaper-common-deps",
+        "SettingsLibSettingsTheme",
+        "SystemUI-statsd",
+        "styleprotoslite",
+	 "vendor_support",
+    ],
+
+    optimize: {
+        enabled: false,
+    },
+
+    resource_dirs: ["res"],
+
+    kotlincflags: ["-Xjvm-default=enable"],
+}
+
 //
 // Build app code.
 //
@@ -72,11 +93,7 @@ android_app {
         "androidx.lifecycle_lifecycle-runtime-ktx",
         "kotlinx_coroutines_android",
         "kotlinx_coroutines",
-        "wallpaper-common-deps",
-        "SettingsLibSettingsTheme",
-        "SystemUI-statsd",
-        "styleprotoslite",
-        "vendor_support",
+	 "ThemePicker_core",
     ],
 
     srcs: [
@@ -87,8 +104,6 @@ android_app {
     ],
 
     use_embedded_native_libs: true,
-
-    resource_zips: [":WallpaperPicker2_res", ":ThemePicker_res"],
 
     optimize: {
         enabled: false,
@@ -105,9 +120,20 @@ android_app {
     required: [
         "privapp_whitelist_com.android.wallpaper.xml",
         "default_permissions_com.android.wallpaper.xml",
+	"PixelThemesStub",
     ],
 
     overrides: ["WallpaperPicker2", "WallpaperPicker"],
+}
+
+android_app_import {
+    name: "PixelThemesStub",
+    apk: "PixelThemesStub.apk",
+    presigned: true,
+    product_specific: true,
+    dex_preopt: {
+        enabled: false,
+    },
 }
 
 prebuilt_etc_xml {
