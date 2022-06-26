@@ -16,4 +16,10 @@
 -->
 <resources>
      <string name="system_icons">系统默认</string>
+
+     <!-- Color section -->
+     <string name="wallpaper_color_tab">壁纸颜色</string>
+     <string name="wallpaper_color_title">壁纸颜色</string>
+     <string name="preset_color_tab">基本颜色</string>
+     <string name="color_changed">颜色已更改</string>
 </resources>
